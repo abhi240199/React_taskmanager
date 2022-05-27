@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 
-export class Cart extends React.Component {
+export class PendingTask extends React.Component {
   render() {
     const { title, text, completed, id } = this.props.task;
     return (
