@@ -1,4 +1,4 @@
-import TodoComponent from "./TodoComponent";
+import TodoComponent from "./taskmanager/TodoComponent";
 
 export default function Home() {
   return (
