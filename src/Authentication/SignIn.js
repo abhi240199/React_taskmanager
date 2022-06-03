@@ -2,11 +2,14 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 export default function SignIn() {
+  
+  const username = localStorage.getItem("uname");
   return (
     <div style={styles}>
       <div>
         <h3>Log In</h3>
       </div>
+      <b>{username}Already login</b>
       <div>
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
