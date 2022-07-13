@@ -9,6 +9,8 @@ import { Footer } from "./Footer";
 
 // import TodoComponent from "./TodoComponent";
 import Home from "./Home";
+import ContactForm from "./Aioms/ContactForm";
+import UpdateName from "./Aioms/UpdateName";
 
 export default class App extends React.Component {
   render() {
@@ -20,6 +22,11 @@ export default class App extends React.Component {
             <Route path="/" element={<Home />}></Route>
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/signin" element={<SignIn />}></Route>
+            <Route path="/contactform" element={<ContactForm />}></Route>
+            <Route
+              path="/updatecontactname/:updateid"
+              element={<UpdateName />}
+            ></Route>
           </Routes>
         </BrowserRouter>
         <Footer />
