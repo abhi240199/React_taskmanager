@@ -11,6 +11,7 @@ import { Footer } from "./Footer";
 import Home from "./Home";
 import ContactForm from "./Aioms/ContactForm";
 import UpdateName from "./Aioms/UpdateName";
+import { Profile } from "./Authentication/Profile";
 
 export default class App extends React.Component {
   render() {
@@ -23,6 +24,7 @@ export default class App extends React.Component {
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/signin" element={<SignIn />}></Route>
             <Route path="/contactform" element={<ContactForm />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
             <Route
               path="/updatecontactname/:updateid"
               element={<UpdateName />}

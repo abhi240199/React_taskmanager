@@ -1,7 +1,39 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
+import { useState } from "react";
+import axios from "axios";
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [flag, setFlag] = useState(false);
+  const [msg, setMessage] = useState("Please Sign In");
+
+  function handleInput(e) {
+    if (e.target.name === "email") {
+      setEmail(e.target.value);
+    }
+    if (e.target.name === "password") {
+      setPassword(e.target.value);
+    }
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      let user = await axios.post("http://localhost:8000/user/create-session", {
+        email: email,
+        password: password,
+      });
+      console.log(user);
+      if (user.data.status === true) {
+        setFlag(true);
+        setMessage(user.data.msg);
+      } else {
+        setMessage(user.data.msg);
+      }
+    } catch (err) {
+      console.log("error is as", err);
+    }
+  };
   // const username = localStorage.getItem("uname");
   return (
     <div style={styles}>
@@ -13,7 +45,12 @@ export default function SignIn() {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" name="email" />
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              name="email"
+              onChange={handleInput}
+            />
             <Form.Text className="text-muted">
               We'll never share your email with anyone else.
             </Form.Text>
@@ -24,13 +61,21 @@ export default function SignIn() {
             name="password"
           >
             <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={handleInput}
+            />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={handleSubmit}>
             Login
           </Button>
         </Form>
       </div>
+      <br></br>
+      {msg}
     </div>
   );
 }

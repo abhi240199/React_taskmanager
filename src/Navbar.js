@@ -6,7 +6,6 @@ import Container from "react-bootstrap/Container";
 // import { Link } from "react-router-dom";
 
 export class Header extends React.Component {
-   
   render() {
     return (
       <>
@@ -25,6 +24,8 @@ export class Header extends React.Component {
               </Navbar.Brand>
             </Nav.Link>
             <Nav>
+              <Nav.Link href="profile">Profile</Nav.Link>
+
               <Nav.Link href="signin">Sign In</Nav.Link>
               <Nav.Link eventKey={2} href="signup">
                 Sign Up

@@ -1,12 +1,18 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [flag, setFlag] = useState(false);
+  const [msg, setMessage] = useState("Please Sign Up");
 
+  const navigate = useNavigate();
   function handleInput(e) {
     if (e.target.name === "username") {
       setUsername(e.target.value);
@@ -21,22 +27,36 @@ export default function SignUp() {
       setConfirmPassword(e.target.value);
     }
   }
-  function handleSubmit() {
-    console.log(username, password);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     if (confirmPassword === password && email !== "" && username !== "") {
-      localStorage.setItem(email, password);
-      localStorage.setItem("uname", username);
+      try {
+        let user = await axios.post("http://localhost:8000/user/create", {
+          name: username,
+          email: email,
+          password: password,
+        });
+        console.log(user);
+        if (user.data.status === true) {
+          setFlag(true);
+          setMessage(user.data.msg);
+        } else {
+          setMessage(user.data.msg);
+        }
+      } catch (err) {
+        console.log("error is as", err);
+      }
     }
-  }
+  };
   return (
     <div style={styles}>
-      {console.log(username, email, password, confirmPassword)}
+      {/* {console.log(username, email, password, confirmPassword)} */}
       <div>
         <h3>Create an Account</h3>
       </div>
       <div>
         <Form>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
@@ -44,11 +64,8 @@ export default function SignUp() {
               name="username"
               onChange={handleInput}
             />
-            {/* <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text> */}
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Group className="mb-3">
             <Form.Label>Email address</Form.Label>
 
             <Form.Control
@@ -58,7 +75,7 @@ export default function SignUp() {
               onChange={handleInput}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
@@ -81,6 +98,9 @@ export default function SignUp() {
           </Button>
         </Form>
       </div>
+      <br></br>
+      {msg}
+      {/* {!flag ? msg : msg} */}
     </div>
   );
 }
